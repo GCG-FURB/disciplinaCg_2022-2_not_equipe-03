@@ -10,4 +10,11 @@ Descrição:
 
 Pontos positivos:  
 
+- Animação: conceitos, histórico, mercado, exemplos  
+- Percepção Visual: conceitos  
+- Digitalizador 3D: conceitos, exemplos, mercado/preços  
+
 Pontos negativos:  
+
+- Percepção Visual: complexos  
+- LiDAR: exemplos  
