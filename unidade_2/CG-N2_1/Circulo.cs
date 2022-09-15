@@ -20,14 +20,21 @@ namespace gcgcg
         {
             // Distancia entre os pontos
             double distanciaPontos = 360 / qtdPontos;
-            double pontoAnterior = 0; 
+            double anguloAnterior = 0; 
             // calcular pontos
             base.PontosAdicionar(ptoCentral);
             for (int i = 0; i < qtdPontos; i++)
-            {
-                base.PontosAdicionar(Matematica.GerarPtosCirculo(pontoAnterior, raio));
-                pontoAnterior += distanciaPontos;
+            {   
+                Ponto4D ponto = Matematica.GerarPtosCirculo(anguloAnterior, raio);
+                base.PontosAdicionar(this.DeslocarPonto(ponto, ptoCentral));
+                anguloAnterior += distanciaPontos;
             };
+        }
+
+        private Ponto4D DeslocarPonto(Ponto4D ponto, Ponto4D ptoCentral){
+            ponto.X += ptoCentral.X;
+            ponto.Y += ptoCentral.Y;
+            return ponto;
         }
 
         protected override void DesenharObjeto()
@@ -49,7 +56,7 @@ namespace gcgcg
         //TODO: melhorar para exibir não só a lista de pontos (geometria), mas também a topologia ... poderia ser listado estilo OBJ da Wavefrom
 #if CG_Debug
         public override string ToString()
-        {
+        {   
             string retorno;
             retorno = "__ Objeto Circulo: " + base.rotulo + "\n";
             for (var i = 0; i < pontosLista.Count; i++)
