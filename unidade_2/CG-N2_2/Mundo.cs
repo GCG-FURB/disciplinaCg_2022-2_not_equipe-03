@@ -136,8 +136,11 @@ namespace gcgcg
       else if (e.Key == Key.I && camera.xmin < -100 && camera.ymin < -100)
         camera.ZoomIn();
 
-      else if (e.Key == Key.O && camera.xmin > -400 && camera.ymin > -400)
+      else if (e.Key == Key.O && camera.xmin > -400 && camera.ymin > -400) {
+        Console.WriteLine("xmin: " + camera.xmin);
+        Console.WriteLine("ymin: " + camera.ymin);
         camera.ZoomOut();
+      }
       else
         Console.WriteLine(" __ Tecla não implementada.");
     }
