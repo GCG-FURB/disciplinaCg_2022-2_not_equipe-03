@@ -8,32 +8,17 @@ using CG_Biblioteca;
 
 namespace gcgcg
 {
-    internal class Circulo : ObjetoGeometria
+    internal class SegReta : ObjetoGeometria
     {
-        public Circulo(
+        public SegReta(
             char rotulo, 
             Objeto paiRef, 
-            Ponto4D ptoCentral,
-            double raio,
-            int qtdPontos
+            Ponto4D ptoInicial,
+            Ponto4D ptoFinal
              ) : base(rotulo, paiRef)
         {
-            // Distancia entre os pontos
-            double distanciaPontos = 360 / qtdPontos;
-            double anguloAnterior = 0; 
-            // calcular pontos
-            for (int i = 0; i < qtdPontos; i++)
-            {   
-                Ponto4D ponto = Matematica.GerarPtosCirculo(anguloAnterior, raio);
-                base.PontosAdicionar(this.DeslocarPonto(ponto, ptoCentral));
-                anguloAnterior += distanciaPontos;
-            };
-        }
-
-        private Ponto4D DeslocarPonto(Ponto4D ponto, Ponto4D ptoCentral){
-            ponto.X += ptoCentral.X;
-            ponto.Y += ptoCentral.Y;
-            return ponto;
+            base.PontosAdicionar(ptoInicial);
+            base.PontosAdicionar(ptoFinal);
         }
 
         protected override void DesenharObjeto()

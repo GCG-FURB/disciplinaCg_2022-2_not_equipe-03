@@ -58,7 +58,7 @@ namespace gcgcg
       // objetosLista.Add(obj_Retangulo);
       // objetoSelecionado = obj_Retangulo;
       obj_Circulo = new Circulo(objetoId, null, new Ponto4D(0, 0, 0), 100, 72);
-      obj_Circulo.ObjetoCor.CorR = 0; obj_Circulo.ObjetoCor.CorG = 255; obj_Circulo.ObjetoCor.CorB = 255;
+      obj_Circulo.ObjetoCor.CorR = 255; obj_Circulo.ObjetoCor.CorG = 255; obj_Circulo.ObjetoCor.CorB = 0;
       obj_Circulo.PrimitivaTipo = PrimitiveType.Points;
       obj_Circulo.PrimitivaTamanho = 5;
       objetosLista.Add(obj_Circulo);
