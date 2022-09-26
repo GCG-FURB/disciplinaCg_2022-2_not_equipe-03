@@ -12,6 +12,13 @@ namespace gcgcg
     {
         public SegReta(
             char rotulo, 
+            Objeto paiRef
+             ) : base(rotulo, paiRef)
+             {
+
+             }
+        public SegReta(
+            char rotulo, 
             Objeto paiRef, 
             Ponto4D ptoInicial,
             Ponto4D ptoFinal
@@ -42,7 +49,7 @@ namespace gcgcg
         public override string ToString()
         {   
             string retorno;
-            retorno = "__ Objeto Circulo: " + base.rotulo + "\n";
+            retorno = "__ Objeto SegReta: " + base.rotulo + "\n";
             for (var i = 0; i < pontosLista.Count; i++)
             {
                 retorno += "P" + i + "[" + pontosLista[i].X + "," + pontosLista[i].Y + "," + pontosLista[i].Z + "," + pontosLista[i].W + "]" + "\n";

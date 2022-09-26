@@ -37,7 +37,7 @@ namespace gcgcg
     private bool bBoxDesenhar = false;
     int mouseX, mouseY;   //TODO: achar método MouseDown para não ter variável Global
     private bool mouseMoverPto = false;
-    private Retangulo obj_Retangulo;
+    private SrPalito obj_SrPalito;
 #if CG_Privado
     private Privado_SegReta obj_SegReta;
     private Privado_Circulo obj_Circulo;
@@ -52,11 +52,11 @@ namespace gcgcg
       Console.WriteLine(" [  H     ] mostra teclas usadas. ");
 
       objetoId = Utilitario.charProximo(objetoId);
-      obj_Retangulo = new Retangulo(objetoId, null, new Ponto4D(200, 200), new Ponto4D(-200, -200));
-      obj_Retangulo.ObjetoCor.CorR = 255; obj_Retangulo.ObjetoCor.CorG = 255; obj_Retangulo.ObjetoCor.CorB = 255;
-      obj_Retangulo.PrimitivaTipo = PrimitiveType.Points;
-      obj_Retangulo.PrimitivaTamanho = 5;
-      objetosLista.Add(obj_Retangulo);
+      obj_SrPalito = new SrPalito(objetoId, null, 100, 45);
+      obj_SrPalito.ObjetoCor.CorR = 0; obj_SrPalito.ObjetoCor.CorG = 0; obj_SrPalito.ObjetoCor.CorB = 0;
+      obj_SrPalito.PrimitivaTipo = PrimitiveType.Lines;
+      obj_SrPalito.PrimitivaTamanho = 5;
+      objetosLista.Add(obj_SrPalito);
 
 #if CG_Privado
       objetoId = Utilitario.charProximo(objetoId);
@@ -108,27 +108,30 @@ namespace gcgcg
       else if (e.Key == Key.V)
         mouseMoverPto = !mouseMoverPto;   //TODO: falta atualizar a BBox do objeto
       
-      else if (e.Key == Key.E && camera.xmax <= 600)
-        camera.PanEsquerda();
+      else if (e.Key == Key.Q)
+      // Mover esquerda
+        obj_SrPalito.MoverEsquerda();
 
-      else if (e.Key == Key.D && camera.xmin >= -600)
-        camera.PanDireita();
+      else if (e.Key == Key.W)
+      // Mover direita
+        obj_SrPalito.MoverDireita();
 
-      else if (e.Key == Key.C && camera.ymin >= -600)
-        camera.PanCima();
+      else if (e.Key == Key.A)
+      // Diminuir raio
+        obj_SrPalito.DiminuirRaio();
 
-      else if (e.Key == Key.B && camera.ymax <= 600)
-        camera.PanBaixo();
+      else if (e.Key == Key.S)
+      // Aumentar raio
+        obj_SrPalito.AumentarRaio();
 
-      else if (e.Key == Key.I && camera.xmin < -100 && camera.ymin < -100)
-        camera.ZoomIn();
+      else if (e.Key == Key.Z)
+      // Diminuir angulo
+        obj_SrPalito.DiminuirAngulo();
 
-      else if (e.Key == Key.O && camera.xmin > -400 && camera.ymin > -400)
-        camera.ZoomOut();
+      else if (e.Key == Key.X)
+      // Aumentar angulo
+        obj_SrPalito.AumentarAngulo();
 
-      else if (e.Key == Key.Space) {
-        obj_Retangulo.ProximaPrimitiva();
-      }
       else
         Console.WriteLine(" __ Tecla não implementada.");
     }
