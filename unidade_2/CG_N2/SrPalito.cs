@@ -37,40 +37,68 @@ namespace gcgcg
         }
 
         public void MoverEsquerda(){
-            base.pontosLista[0].X += 2;
-            base.pontosLista[1].X += 2;
-        }
+            Ponto4D pontoInicial = base.pontosLista[0];
+            Ponto4D pontoFinalAntes = base.pontosLista[1];
 
+            pontoInicial.X += 2;
+            base.PontosAlterar(pontoInicial, 0);
+
+            Ponto4D pontoFinal = Matematica.GerarPtosCirculo(this.angulo, this.raio);
+            pontoFinal.X += 2;
+            Ponto4D pontoDeslocado = this.DeslocarPonto(pontoFinal, pontoInicial);
+            base.PontosAlterar(pontoDeslocado, 1);
+        }
         public void MoverDireita(){
-            base.pontosLista[0].X -= 2;
-            base.pontosLista[1].X -= 2;
+            Ponto4D pontoInicial = base.pontosLista[0];
+            Ponto4D pontoFinalAntes = base.pontosLista[1];
+
+            pontoInicial.X -= 2;
+            base.PontosAlterar(pontoInicial, 0);
+
+            Ponto4D pontoFinal = Matematica.GerarPtosCirculo(this.angulo, this.raio);
+            pontoFinal.X -= 2;
+            Ponto4D pontoDeslocado = this.DeslocarPonto(pontoFinal, pontoInicial);
+            base.PontosAlterar(pontoDeslocado, 1);
         }
 
         public void AumentarRaio(){
+            Ponto4D pontoInicial = base.pontosLista[0];
+
             this.raio += 2;
             Ponto4D pontoAntigo = base.pontosLista[1];
             Ponto4D pontoFinal = Matematica.GerarPtosCirculo(this.angulo, this.raio);
-            base.PontosAlterar(pontoFinal, 1);
+            Ponto4D pontoDeslocado = this.DeslocarPonto(pontoFinal, pontoInicial);
+            base.PontosAlterar(pontoDeslocado, 1);
         }
 
         public void DiminuirRaio(){
             if (this.raio - 2 > 0) {
+                Ponto4D pontoInicial = base.pontosLista[0];
+
                 this.raio -= 2;
+                Ponto4D pontoAntigo = base.pontosLista[1];
                 Ponto4D pontoFinal = Matematica.GerarPtosCirculo(this.angulo, this.raio);
-                base.PontosAlterar(pontoFinal, 1);
+                Ponto4D pontoDeslocado = this.DeslocarPonto(pontoFinal, pontoInicial);
+                base.PontosAlterar(pontoDeslocado, 1);
             }
         }
 
         public void AumentarAngulo(){
+            Ponto4D pontoInicial = base.pontosLista[0];
+
             this.angulo += 2;
             Ponto4D pontoFinal = Matematica.GerarPtosCirculo(this.angulo, this.raio);
-            base.PontosAlterar(pontoFinal, 1);
+            Ponto4D pontoDeslocado = this.DeslocarPonto(pontoFinal, pontoInicial);
+            base.PontosAlterar(pontoDeslocado, 1);
         }
 
         public void DiminuirAngulo(){
+            Ponto4D pontoInicial = base.pontosLista[0];
+
             this.angulo -= 2;
             Ponto4D pontoFinal = Matematica.GerarPtosCirculo(this.angulo, this.raio);
-            base.PontosAlterar(pontoFinal, 1);
+            Ponto4D pontoDeslocado = this.DeslocarPonto(pontoFinal, pontoInicial);
+            base.PontosAlterar(pontoDeslocado, 1);
         }
         protected override void DesenharObjeto()
         {
