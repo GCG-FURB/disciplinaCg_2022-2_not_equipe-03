@@ -13,7 +13,7 @@ namespace gcgcg
 {
   internal class Retangulo : ObjetoGeometria
   {
-    protected byte mudaPrimitiva = 0;
+    private int primitiva = 0;
     public Retangulo(char rotulo, Objeto paiRef, Ponto4D ptoInfEsq, Ponto4D ptoSupDir) : base(rotulo, paiRef)
     {
       base.PontosAdicionar(ptoInfEsq);
@@ -21,62 +21,26 @@ namespace gcgcg
       base.PontosAdicionar(ptoSupDir);
       base.PontosAdicionar(new Ponto4D(ptoInfEsq.X, ptoSupDir.Y));
     }
-// muda pra Points, Lines, LineLoop, LineStrip, Triangles, TriangleStrip, TriangleFan, Quads, QuadStrip e Polygon.
-    public PrimitiveType MudaPrimitiva()
-    {
-      PrimitiveType pt;
 
-      if(this.mudaPrimitiva > 8)
-      {
-        mudaPrimitiva = 0;
+    public void ProximaPrimitiva() {
+      if (this.primitiva >= 15) {
+        this.primitiva = 0;
+        base.PrimitivaTipo = 0;
       }
-
-      switch (mudaPrimitiva)
-      {
-        case 0: 
-          pt = PrimitiveType.Points;
-          break;
-        case 1: 
-          pt = PrimitiveType.Lines;
-          break;
-        case 2: 
-          pt = PrimitiveType.LineLoop;
-          break;
-        case 3: 
-          pt = PrimitiveType.LineStrip;
-          break;
-        case 4: 
-          pt = PrimitiveType.Triangles;
-          break;
-        case 5: 
-          pt = PrimitiveType.TriangleStrip;
-          break;
-        case 6: 
-          pt = PrimitiveType.TriangleFan;
-          break;
-        case 7: 
-          pt = PrimitiveType.Quads;
-          break;
-        case 8: 
-          pt = PrimitiveType.QuadStrip;
-          break;
-        default:
-          pt = PrimitiveType.Lines;
-          break;
+      else {
+        this.primitiva += 1;
+        base.PrimitivaTipo += 1;
       }
-        mudaPrimitiva++;
-        return pt;
     }
+
     protected override void DesenharObjeto()
     {
 #if CG_OpenGL && !CG_DirectX
       GL.Begin(base.PrimitivaTipo);
-      /*
-      foreach (Ponto4D pto in pontosLista)
-      {
-        GL.Vertex2(pto.X, pto.Y);
-      }
-      */
+      // foreach (Ponto4D pto in pontosLista)
+      // {
+      //   GL.Vertex2(pto.X, pto.Y);
+      // }
       GL.Color3(1.0f,0.0f,1.0f);
       GL.Vertex2(pontosLista[0].X, pontosLista[0].Y);
       GL.Color3(0.0f,1.0f,1.0f);

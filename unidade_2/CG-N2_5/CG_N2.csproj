@@ -13,9 +13,7 @@
 <!-- Windows
   <PackageReference Include="OpenTK.NetCore" Version="*" />
 -->
-  <PackageReference Include="OpenTK" Version="3.0.1" />
   <PackageReference Include="OpenTK.NetCore" Version="*" />
-  <PackageReference Include="System.Drawing.Common" Version="4.5.0" />
   </ItemGroup>
 
   <!-- <ItemGroup> [TODO:] para que serve isto?

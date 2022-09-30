@@ -1,4 +1,4 @@
-/**
+﻿/**
   Autor: Dalton Solano dos Reis
 **/
 
@@ -34,15 +34,10 @@ namespace gcgcg
     protected List<Objeto> objetosLista = new List<Objeto>();
     private ObjetoGeometria objetoSelecionado = null;
     private char objetoId = '@';
-        private bool bBoxDesenhar = false;
+    private bool bBoxDesenhar = false;
     int mouseX, mouseY;   //TODO: achar método MouseDown para não ter variável Global
     private bool mouseMoverPto = false;
-    private SegReta obj_SrPalito;
-    private Ponto4D ptoOrigem;
-    private Ponto4D ptoFinal;
-    private double anguloPalito;
-    private double tamanhoPalito;
-    
+    private SrPalito obj_SrPalito;
 #if CG_Privado
     private Privado_SegReta obj_SegReta;
     private Privado_Circulo obj_Circulo;
@@ -51,26 +46,17 @@ namespace gcgcg
     protected override void OnLoad(EventArgs e)
     {
       base.OnLoad(e);
-      camera.xmin = -600; camera.xmax = 600; camera.ymin = -600; camera.ymax = 600;
+      camera.xmin = -400; camera.xmax = 400; camera.ymin = -400; camera.ymax = 400;
 
       Console.WriteLine(" --- Ajuda / Teclas: ");
       Console.WriteLine(" [  H     ] mostra teclas usadas. ");
-      anguloPalito = 45;
-      tamanhoPalito = 100;
-      ptoOrigem = new Ponto4D(0,0);
-      ptoFinal = new Ponto4D(100,100);
-      //y = mx + n 
-      //ptoFinal.Y = (anguloPalito * ptoFinal.X) + tamanhoPalito;
-      //ptoFinal.X = (ptoFinal.Y/anguloPalito) - tamanhoPalito;
 
       objetoId = Utilitario.charProximo(objetoId);
-      obj_SrPalito = new SegReta(objetoId, null, ptoOrigem, ptoFinal);
+      obj_SrPalito = new SrPalito(objetoId, null, 100, 45);
       obj_SrPalito.ObjetoCor.CorR = 0; obj_SrPalito.ObjetoCor.CorG = 0; obj_SrPalito.ObjetoCor.CorB = 0;
+      obj_SrPalito.PrimitivaTipo = PrimitiveType.Lines;
       obj_SrPalito.PrimitivaTamanho = 5;
       objetosLista.Add(obj_SrPalito);
-      objetoSelecionado = obj_SrPalito;
-
-
 
 #if CG_Privado
       objetoId = Utilitario.charProximo(objetoId);
@@ -79,13 +65,6 @@ namespace gcgcg
       objetosLista.Add(obj_SegReta);
       objetoSelecionado = obj_SegReta;
 
-      objetoId = Utilitario.charProximo(objetoId);
-      obj_Circulo = new Privado_Circulo(objetoId, null, new Ponto4D(100, 300), 50);
-      obj_Circulo.ObjetoCor.CorR = 0; obj_Circulo.ObjetoCor.CorG = 255; obj_Circulo.ObjetoCor.CorB = 255;
-      obj_Circulo.PrimitivaTipo = PrimitiveType.Points;
-      obj_Circulo.PrimitivaTamanho = 5;
-      objetosLista.Add(obj_Circulo);
-      objetoSelecionado = obj_Circulo;
 #endif
 #if CG_OpenGL
       GL.ClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -119,108 +98,40 @@ namespace gcgcg
 #endif
       this.SwapBuffers();
     }
+
     protected override void OnKeyDown(OpenTK.Input.KeyboardKeyEventArgs e)
     {
       if (e.Key == Key.H)
         Utilitario.AjudaTeclado();
       else if (e.Key == Key.Escape)
         Exit();
-      else if (e.Key == Key.E)
-      {
-        Console.WriteLine("--- Objetos / Pontos: ");
-        for (var i = 0; i < objetosLista.Count; i++)
-        {
-          Console.WriteLine(objetosLista[i]);
-        }
-      }
-      else if(e.Key == Key.O)
-      {
-        //fazer zoom out
-        camera.ZoomOut();
-      }
-      else if(e.Key == Key.I)
-      {
-        //fazer zoom in
-        camera.ZoomIn();
-      }
-      else if(e.Key == (Key.Up | Key.C))
-      {
-        //fazer ir para cima
-        camera.PanCima();
-      }
-      else if(e.Key == (Key.Down | Key.B))
-      {
-        //fazer ir pra baixo
-        camera.PanBaixo();
-      }
-       else if(e.Key == (Key.Left | Key.E))
-      {
-        //fazer ir a esquerda
-        camera.PanEsquerda();
-      }
-      else if(e.Key == (Key.Right | Key.D))
-      {
-        //fazer ir a direita
-        camera.PanDireita();
-      }
-      else if(e.Key == (Key.Space))
-      {
-        //obj_Retangulo.PrimitivaTipo = obj_Retangulo.MudaPrimitiva();
-      }
-      else if(e.Key == (Key.Q))
-      {
-        //Q Sr Palito vai pra esquerda
-        anguloPalito++;
-        this.ptoFinal.X--;
-        this.ptoOrigem.X--;
-      }
-      else if(e.Key == (Key.W))
-      {
-        //W Sr Palito vai pra direita
-        anguloPalito--;
-        ptoFinal.X++;
-        ptoOrigem.X++;
-      }
-      else if(e.Key == (Key.S))
-      {
-        //S Sr Palito aumenta
-        tamanhoPalito++;
-        ptoFinal = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito);
-
-        //this.ptoFinal.X = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito).X;
-        //this.ptoFinal.Y = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito).Y;
-      }
-      else if(e.Key == (Key.A))
-      {
-        //A Sr Palito diminui
-        tamanhoPalito--;
-        ptoFinal = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito);
-        //this.ptoFinal.X = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito).X;
-        //this.ptoFinal.Y = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito).Y;
-      } 
-      else if(e.Key == (Key.Z))
-      {
-        //Z Sr Palito aumenta o angulo
-        anguloPalito++;
-        ptoFinal = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito);
-        //this.ptoFinal.X = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito).X;
-        //this.ptoFinal.Y = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito).Y;
-
-      }
-      else if(e.Key == (Key.X))
-      {
-        //X Sr Palito diminui o angulo
-        this.anguloPalito--;
-        ptoFinal = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito);
-        //this.ptoFinal.X = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito).X;
-        //this.ptoFinal.Y = Matematica.GerarPtosCirculo(anguloPalito, tamanhoPalito).Y;
-      }  
-#if CG_Gizmo
-      else if (e.Key == Key.O)
-        bBoxDesenhar = !bBoxDesenhar;
-#endif
       else if (e.Key == Key.V)
         mouseMoverPto = !mouseMoverPto;   //TODO: falta atualizar a BBox do objeto
+      
+      else if (e.Key == Key.Q)
+      // Mover esquerda
+        obj_SrPalito.MoverEsquerda();
+
+      else if (e.Key == Key.W)
+      // Mover direita
+        obj_SrPalito.MoverDireita();
+
+      else if (e.Key == Key.A)
+      // Diminuir raio
+        obj_SrPalito.DiminuirRaio();
+
+      else if (e.Key == Key.S)
+      // Aumentar raio
+        obj_SrPalito.AumentarRaio();
+
+      else if (e.Key == Key.Z)
+      // Diminuir angulo
+        obj_SrPalito.DiminuirAngulo();
+
+      else if (e.Key == Key.X)
+      // Aumentar angulo
+        obj_SrPalito.AumentarAngulo();
+
       else
         Console.WriteLine(" __ Tecla não implementada.");
     }

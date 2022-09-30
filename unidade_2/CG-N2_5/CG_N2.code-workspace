@@ -1,11 +1,20 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../CG_Biblioteca"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../../CG_Biblioteca"
+    },
+    {
+      "path": "../CG-N2_1"
+    },
+    {
+      "path": "../CG-N2_2"
+    },
+    {
+      "path": "../CG-N2_5"
+    }
+  ],
+  "settings": {}
 }
