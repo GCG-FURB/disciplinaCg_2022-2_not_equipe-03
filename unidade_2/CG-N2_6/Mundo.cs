@@ -154,16 +154,16 @@ namespace gcgcg
                 ptoSelecionado.Y += 1;
 
             else if (e.Key == Key.B)
-            // Mover baixo
-              ptoSelecionado.Y -= 1;
+                // Mover baixo
+                ptoSelecionado.Y -= 1;
 
             else if (e.Key == Key.E)
-            // Mover Esquerda
-              ptoSelecionado.X -= 1;
+                // Mover Esquerda
+                ptoSelecionado.X -= 1;
 
             else if (e.Key == Key.D)
-            // Mover direita
-              ptoSelecionado.X += 1;
+                // Mover direita
+                ptoSelecionado.X += 1;
 
             else if (e.Key == Key.Plus)
             {
@@ -172,24 +172,43 @@ namespace gcgcg
             }
 
             else if (e.Key == Key.Minus)
+            {
                 // Menos pontos
                 if ((obj_Spline.quantidadePontos - 1) > 1)
                 {
                     obj_Spline.quantidadePontos -= 1;
                 }
+            }
 
-                else if (e.Key == Key.R)
-                {
-                    // resetar valores
-                    pto1 = new Ponto4D(100, 100, 0);
-                    pto2 = new Ponto4D(100, -100, 0);
-                    pto3 = new Ponto4D(-100, -100, 0);
-                    pto4 = new Ponto4D(-100, 100, 0);
-                    quantidadePontos = 72;
-                }
+            else if (e.Key == Key.R)
+            {
+                // resetar valores
+                pto1 = new Ponto4D(100, 100, 0);
+                pto2 = new Ponto4D(100, -100, 0);
+                pto3 = new Ponto4D(-100, -100, 0);
+                pto4 = new Ponto4D(-100, 100, 0);
 
-                else
-                    Console.WriteLine(" __ Tecla não implementada.");
+                // Spline
+                obj_Spline.PontosAlterar(pto1, 1);
+                obj_Spline.PontosAlterar(pto2, 0);
+                obj_Spline.PontosAlterar(pto3, 3);
+                obj_Spline.PontosAlterar(pto4, 2);
+
+                // Seg Reta
+                obj_SegReta1.PontosAlterar(pto1, 0);
+                obj_SegReta1.PontosAlterar(pto2, 1);
+
+                obj_SegReta2.PontosAlterar(pto1, 0);
+                obj_SegReta2.PontosAlterar(pto4, 1);
+
+                obj_SegReta3.PontosAlterar(pto3, 0);
+                obj_SegReta3.PontosAlterar(pto4, 1);
+
+                obj_Spline.quantidadePontos = 72;
+            }
+
+            else
+                Console.WriteLine(" __ Tecla não implementada.");
         }
 
         //TODO: não está considerando o NDC
