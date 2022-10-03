@@ -45,6 +45,7 @@ namespace gcgcg
         private Ponto4D pto2;
         private Ponto4D pto3;
         private Ponto4D pto4;
+        private Ponto4D ptoSelecionado;
         private int quantidadePontos = 72;
 
         protected override void OnLoad(EventArgs e)
@@ -88,7 +89,7 @@ namespace gcgcg
             obj_Spline.PrimitivaTamanho = 2;
             objetosLista.Add(obj_Spline);
 
-            objetoSelecionado = obj_SegReta1;
+            ptoSelecionado = pto1;
 
 #if CG_OpenGL
             GL.ClearColor(0.5f, 0.5f, 0.5f, 1.0f);
@@ -134,35 +135,35 @@ namespace gcgcg
 
             else if (e.Key == Key.Number1)
                 // Selecionar ponto 1
-                Console.WriteLine("teste");
+                ptoSelecionado = pto1;
 
             else if (e.Key == Key.Number2)
                 // Selecionar ponto 2
-                Console.WriteLine("teste");
+                ptoSelecionado = pto2;
 
             else if (e.Key == Key.Number3)
                 // Selecionar ponto 3
-                Console.WriteLine("teste");
+                ptoSelecionado = pto3;
 
             else if (e.Key == Key.Number4)
                 // Selecionar ponto 4
-                Console.WriteLine("teste");
+                ptoSelecionado = pto4;
 
             else if (e.Key == Key.C)
                 // Mover para cima
-                Console.WriteLine("teste");
+                ptoSelecionado.Y += 1;
 
-            // else if (e.Key == Key.B)
-            // // Mover baixo
-            //   obj_SrPalito.MoverDireita();
+            else if (e.Key == Key.B)
+            // Mover baixo
+              ptoSelecionado.Y -= 1;
 
-            // else if (e.Key == Key.E)
-            // // Mover Esquerda
-            //   obj_SrPalito.DiminuirRaio();
+            else if (e.Key == Key.E)
+            // Mover Esquerda
+              ptoSelecionado.X -= 1;
 
-            // else if (e.Key == Key.D)
-            // // Mover direita
-            //   obj_SrPalito.AumentarRaio();
+            else if (e.Key == Key.D)
+            // Mover direita
+              ptoSelecionado.X += 1;
 
             else if (e.Key == Key.Plus)
             {
