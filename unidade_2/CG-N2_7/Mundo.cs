@@ -173,11 +173,12 @@ namespace gcgcg
         //TODO: não está considerando o NDC
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
-            mouseX = e.Position.X; mouseY = 600 - e.Position.Y; // Inverti eixo Y
-            if (mouseMoverPto && (objetoSelecionado != null))
+            mouseX = e.Position.X; mouseY = (e.Position.Y * -1);
+            if (mouseMoverPto && (ptoCentral != null))
             {
-                objetoSelecionado.PontosUltimo().X = mouseX;
-                objetoSelecionado.PontosUltimo().Y = mouseY;
+                ptoCentral.X = mouseX - 300;
+                ptoCentral.Y = mouseY + 300;
+                obj_CirculoPequeno.AtualizarPtoCentral(ptoCentral);
             }
         }
 
