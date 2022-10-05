@@ -10,6 +10,10 @@ namespace gcgcg
 {
     internal class Circulo : ObjetoGeometria
     {
+
+        Ponto4D ptoCentral;
+        int qtdPontos;
+        double raio;
         public Circulo(
             char rotulo, 
             Objeto paiRef, 
@@ -18,16 +22,28 @@ namespace gcgcg
             int qtdPontos
              ) : base(rotulo, paiRef)
         {
+            this.ptoCentral = ptoCentral;
+            this.qtdPontos = qtdPontos;
+            this.raio = raio;
             // Distancia entre os pontos
-            double distanciaPontos = 360 / qtdPontos;
+            this.AtualizarPontos();
+        }
+
+        private void AtualizarPontos() {
+            double distanciaPontos = 360 / this.qtdPontos;
             double anguloAnterior = 0; 
             // calcular pontos
-            for (int i = 0; i < qtdPontos; i++)
+            for (int i = 0; i < this.qtdPontos; i++)
             {   
-                Ponto4D ponto = Matematica.GerarPtosCirculo(anguloAnterior, raio);
-                base.PontosAdicionar(this.DeslocarPonto(ponto, ptoCentral));
+                Ponto4D ponto = Matematica.GerarPtosCirculo(anguloAnterior, this.raio);
+                base.PontosAdicionar(this.DeslocarPonto(ponto, this.ptoCentral));
                 anguloAnterior += distanciaPontos;
             };
+        }
+        public void AtualizarPtoCentral(Ponto4D pto){
+            this.ptoCentral = pto;
+            this.PontosRemoverTodos();
+            this.AtualizarPontos();
         }
 
         private Ponto4D DeslocarPonto(Ponto4D ponto, Ponto4D ptoCentral){

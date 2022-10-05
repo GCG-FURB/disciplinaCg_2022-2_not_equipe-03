@@ -1,6 +1,3 @@
-/**
-  Autor: Dalton Solano dos Reis
-**/
 
 #define CG_Debug
 #define CG_OpenGL
@@ -8,37 +5,14 @@
 
 using OpenTK.Graphics.OpenGL;
 using CG_Biblioteca;
-using System.Collections.Generic;
 
 namespace gcgcg
 {
-    internal class Retangulo : ObjetoGeometria
+    internal class Ponto : ObjetoGeometria
     {
-        private int primitiva = 0;
-        public Retangulo(char rotulo, Objeto paiRef, Ponto4D ptoInfEsq, Ponto4D ptoSupDir) : base(rotulo, paiRef)
+        public Ponto(char rotulo, Objeto paiRef, Ponto4D pto) : base(rotulo, paiRef)
         {
-            base.PontosAdicionar(ptoInfEsq);
-            base.PontosAdicionar(new Ponto4D(ptoSupDir.X, ptoInfEsq.Y));
-            base.PontosAdicionar(ptoSupDir);
-            base.PontosAdicionar(new Ponto4D(ptoInfEsq.X, ptoSupDir.Y));
-        }
-
-        public List<Ponto4D> getListaPontos() {
-            return base.pontosLista;
-        }
-
-        public void ProximaPrimitiva()
-        {
-            if (this.primitiva >= 15)
-            {
-                this.primitiva = 0;
-                base.PrimitivaTipo = 0;
-            }
-            else
-            {
-                this.primitiva += 1;
-                base.PrimitivaTipo += 1;
-            }
+            base.PontosAdicionar(pto);
         }
 
         protected override void DesenharObjeto()
@@ -62,7 +36,7 @@ namespace gcgcg
         public override string ToString()
         {
             string retorno;
-            retorno = "__ Objeto Retangulo: " + base.rotulo + "\n";
+            retorno = "__ Objeto Ponto: " + base.rotulo + "\n";
             for (var i = 0; i < pontosLista.Count; i++)
             {
                 retorno += "P" + i + "[" + pontosLista[i].X + "," + pontosLista[i].Y + "," + pontosLista[i].Z + "," + pontosLista[i].W + "]" + "\n";

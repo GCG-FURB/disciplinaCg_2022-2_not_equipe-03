@@ -41,8 +41,24 @@ namespace gcgcg
         private Circulo obj_CirculoGrande;
         private Retangulo obj_Retangulo;
         private Ponto4D ptoCentral;
+        private Ponto obj_Pto;
         private Ponto4D ptoInf;
         private Ponto4D ptoSup;
+        private Ponto4D ptoSelecionado;
+
+        public bool dentro_quadrado(Retangulo obj_Retangulo, Ponto4D ponto)
+        {
+            return (ponto.X <= obj_Retangulo.BBox.obterMenorX ||
+                    ponto.X >= obj_Retangulo.BBox.obterMaiorX ||
+                    ponto.Y <= obj_Retangulo.BBox.obterMenorY ||
+                    ponto.Y >= obj_Retangulo.BBox.obterMaiorY);
+        }
+        public bool dentro_circulo(Circulo obj_Circulo, Ponto4D ponto, double raio)
+        {
+            double dist = Math.Sqrt(Math.Pow(obj_Circulo.BBox.obterCentro.X - ponto.X, 2) +
+                                    Math.Pow(obj_Circulo.BBox.obterCentro.Y - ponto.Y, 2));
+            return dist <= raio;
+        }
 
         protected override void OnLoad(EventArgs e)
         {
@@ -55,15 +71,26 @@ namespace gcgcg
             ptoCentral = new Ponto4D(100, 100);
 
             objetoId = Utilitario.charProximo(objetoId);
-            obj_CirculoPequeno = new Circulo(objetoId, null, ptoCentral, 75, 72);
+            obj_Pto = new Ponto(objetoId, null, ptoCentral);
+            obj_Pto.ObjetoCor.CorR = 0; obj_Pto.ObjetoCor.CorG = 0; obj_Pto.ObjetoCor.CorB = 0;
+            obj_Pto.PrimitivaTamanho = 5;
+            obj_Pto.PrimitivaTipo = PrimitiveType.Points;
+            objetosLista.Add(obj_Pto);
+
+            objetoId = Utilitario.charProximo(objetoId);
+            obj_CirculoPequeno = new Circulo(objetoId, null, ptoCentral, 100, 72);
             obj_CirculoPequeno.ObjetoCor.CorR = 0; obj_CirculoPequeno.ObjetoCor.CorG = 0; obj_CirculoPequeno.ObjetoCor.CorB = 0;
             obj_CirculoPequeno.PrimitivaTamanho = 2;
+            obj_CirculoPequeno.PrimitivaTipo = PrimitiveType.LineLoop;
             objetosLista.Add(obj_CirculoPequeno);
+
+            ptoSelecionado = ptoCentral;
 
             objetoId = Utilitario.charProximo(objetoId);
             obj_CirculoGrande = new Circulo(objetoId, null, ptoCentral, 200, 72);
             obj_CirculoGrande.ObjetoCor.CorR = 0; obj_CirculoGrande.ObjetoCor.CorG = 0; obj_CirculoGrande.ObjetoCor.CorB = 0;
             obj_CirculoGrande.PrimitivaTamanho = 2;
+            obj_CirculoGrande.PrimitivaTipo = PrimitiveType.LineLoop;
             objetosLista.Add(obj_CirculoGrande);
 
             ptoSup = Matematica.GerarPtosCirculo(45, 200);
@@ -80,17 +107,9 @@ namespace gcgcg
             obj_Retangulo.PrimitivaTamanho = 2;
             objetosLista.Add(obj_Retangulo);
 
-            // objetoId = Utilitario.charProximo(objetoId);
-            // obj_Spline = new Spline(objetoId, null, pto2, pto1, pto4, pto3, quantidadePontos);
-            // obj_Spline.ObjetoCor.CorR = 255; obj_Spline.ObjetoCor.CorG = 255; obj_Spline.ObjetoCor.CorB = 0;
-            // obj_Spline.PrimitivaTipo = PrimitiveType.Points;
-            // obj_Spline.PrimitivaTamanho = 2;
-            // objetosLista.Add(obj_Spline);
-
-            // ptoSelecionado = pto1;
 
 #if CG_OpenGL
-            GL.ClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+            GL.ClearColor(1f, 1f, 1f, 1.0f);
 #endif
         }
         protected override void OnUpdateFrame(FrameEventArgs e)
@@ -113,6 +132,23 @@ namespace gcgcg
 #if CG_Gizmo
             Sru3D();
 #endif
+
+            obj_Retangulo.BBox.Desenhar();
+
+            if (dentro_quadrado(obj_Retangulo, obj_CirculoPequeno.BBox.obterCentro))
+            {
+                obj_Retangulo.ObjetoCor.CorR = 255; obj_Retangulo.ObjetoCor.CorG = 255; obj_Retangulo.ObjetoCor.CorB = 0;
+
+                if (!dentro_circulo(obj_CirculoGrande, obj_CirculoPequeno.BBox.obterCentro, 200))
+                {
+                    obj_Retangulo.ObjetoCor.CorR = 0; obj_Retangulo.ObjetoCor.CorG = 255; obj_Retangulo.ObjetoCor.CorB = 255;
+                }
+            }
+            else
+            {
+                obj_Retangulo.ObjetoCor.CorR = 255; obj_Retangulo.ObjetoCor.CorG = 0; obj_Retangulo.ObjetoCor.CorB = 255;
+            }
+
             for (var i = 0; i < objetosLista.Count; i++)
                 objetosLista[i].Desenhar();
 #if CG_Gizmo
@@ -130,64 +166,8 @@ namespace gcgcg
                 Exit();
             else if (e.Key == Key.V)
                 mouseMoverPto = !mouseMoverPto;   //TODO: falta atualizar a BBox do objeto
-
-            // else if (e.Key == Key.Number1)
-            //     // Selecionar ponto 1
-            //     ptoSelecionado = pto1;
-
-            // else if (e.Key == Key.Number2)
-            //     // Selecionar ponto 2
-            //     ptoSelecionado = pto2;
-
-            // else if (e.Key == Key.Number3)
-            //     // Selecionar ponto 3
-            //     ptoSelecionado = pto3;
-
-            // else if (e.Key == Key.Number4)
-            //     // Selecionar ponto 4
-            //     ptoSelecionado = pto4;
-
-            // else if (e.Key == Key.C)
-            //     // Mover para cima
-            //     ptoSelecionado.Y += 1;
-
-            // else if (e.Key == Key.B)
-            // // Mover baixo
-            //   ptoSelecionado.Y -= 1;
-
-            // else if (e.Key == Key.E)
-            // // Mover Esquerda
-            //   ptoSelecionado.X -= 1;
-
-            // else if (e.Key == Key.D)
-            // // Mover direita
-            //   ptoSelecionado.X += 1;
-
-            // else if (e.Key == Key.Plus)
-            // {
-            //     // Mais pontos
-            //     obj_Spline.quantidadePontos += 1;
-            // }
-
-            // else if (e.Key == Key.Minus)
-            //     // Menos pontos
-            //     if ((obj_Spline.quantidadePontos - 1) > 1)
-            //     {
-            //         obj_Spline.quantidadePontos -= 1;
-            //     }
-
-            //     else if (e.Key == Key.R)
-            //     {
-            //         // resetar valores
-            //         pto1 = new Ponto4D(100, 100, 0);
-            //         pto2 = new Ponto4D(100, -100, 0);
-            //         pto3 = new Ponto4D(-100, -100, 0);
-            //         pto4 = new Ponto4D(-100, 100, 0);
-            //         obj_Spline.quantidadePontos = 72;
-            //     }
-
-                else
-                    Console.WriteLine(" __ Tecla não implementada.");
+            else
+                Console.WriteLine(" __ Tecla não implementada.");
         }
 
         //TODO: não está considerando o NDC
