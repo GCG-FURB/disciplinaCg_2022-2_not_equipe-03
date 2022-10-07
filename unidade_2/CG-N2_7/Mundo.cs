@@ -63,12 +63,12 @@ namespace gcgcg
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            camera.xmin = -400; camera.xmax = 400; camera.ymin = -400; camera.ymax = 400;
+            camera.xmin = 0; camera.xmax = 600; camera.ymin = 600; camera.ymax = 0;
 
             Console.WriteLine(" --- Ajuda / Teclas: ");
             Console.WriteLine(" [  H     ] mostra teclas usadas. ");
 
-            ptoCentral = new Ponto4D(100, 100);
+            ptoCentral = new Ponto4D(300, 300);
 
             objetoId = Utilitario.charProximo(objetoId);
             obj_Pto = new Ponto(objetoId, null, ptoCentral);
@@ -173,12 +173,13 @@ namespace gcgcg
         //TODO: não está considerando o NDC
         protected override void OnMouseMove(MouseMoveEventArgs e)
         {
-            mouseX = e.Position.X; mouseY = (e.Position.Y * -1);
-            if (mouseMoverPto && (ptoCentral != null))
+            mouseX = e.Position.X; mouseY = (e.Position.Y * 1);
+            if (mouseMoverPto && dentro_circulo(obj_CirculoGrande, new Ponto4D(mouseX, mouseY), 201))
             {
-                ptoCentral.X = mouseX - 300;
-                ptoCentral.Y = mouseY + 300;
+                ptoCentral.X = mouseX;
+                ptoCentral.Y = mouseY;
                 obj_CirculoPequeno.AtualizarPtoCentral(ptoCentral);
+
             }
         }
 
