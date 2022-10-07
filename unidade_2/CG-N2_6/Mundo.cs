@@ -85,7 +85,7 @@ namespace gcgcg
             objetoId = Utilitario.charProximo(objetoId);
             obj_Spline = new Spline(objetoId, null, pto2, pto1, pto4, pto3, quantidadePontos);
             obj_Spline.ObjetoCor.CorR = 255; obj_Spline.ObjetoCor.CorG = 255; obj_Spline.ObjetoCor.CorB = 0;
-            obj_Spline.PrimitivaTipo = PrimitiveType.Points;
+            obj_Spline.PrimitivaTipo = PrimitiveType.LineStrip;
             obj_Spline.PrimitivaTamanho = 2;
             objetosLista.Add(obj_Spline);
 
