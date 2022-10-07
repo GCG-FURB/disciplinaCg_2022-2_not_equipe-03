@@ -122,16 +122,16 @@ namespace gcgcg
         mouseMoverPto = !mouseMoverPto;   //TODO: falta atualizar a BBox do objeto
       
       else if (e.Key == Key.E && camera.xmax <= 600)
-        camera.PanEsquerda();
-
-      else if (e.Key == Key.D && camera.xmin >= -600)
         camera.PanDireita();
 
+      else if (e.Key == Key.D && camera.xmin >= -600)
+        camera.PanEsquerda();
+
       else if (e.Key == Key.C && camera.ymin >= -600)
-        camera.PanCima();
+        camera.PanBaixo();
 
       else if (e.Key == Key.B && camera.ymax <= 600)
-        camera.PanBaixo();
+        camera.PanCima();
 
       else if (e.Key == Key.I && camera.xmin < -100 && camera.ymin < -100)
         camera.ZoomIn();
