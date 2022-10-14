@@ -1,11 +1,47 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../CG_Biblioteca"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../../CG_Biblioteca"
+    },
+    {
+      "path": "../CG-N3_1"
+    },
+    {
+      "path": "../CG-N3_2"
+    },
+    {
+      "path": "../CG-N3_3"
+    },
+    {
+      "path": "../CG-N3_4"
+    },
+    {
+      "path": "../CG-N3_5"
+    },
+    {
+      "path": "../CG-N3_6"
+    },
+    {
+      "path": "../CG-N3_7"
+    },
+    {
+      "path": "../CG-N3_8"
+    },
+    {
+      "path": "../CG-N3_9"
+    },
+    {
+      "path": "../CG-N3_10"
+    },
+    {
+      "path": "../CG-N3_11"
+    },
+    {
+      "path": "../CG-N3_12"
+    }
+  ],
+  "settings": {}
 }
