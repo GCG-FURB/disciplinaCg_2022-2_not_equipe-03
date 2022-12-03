@@ -31,10 +31,8 @@ namespace gcgcg
         private char menuEixoSelecao = 'z';
         private float deslocamento = 1;
         private bool bBoxDesenhar = false;
-        private List<Peca> Pecas = new List<Peca>();
-        private List<Peca> PecasPosicionadas = new List<Peca>();
         private int indexPecaAtual = 0;
-        private int posicaoPecaPosicionada = 4;
+        Domino domino = new Domino();
 
 #if CG_Privado
     private Cilindro obj_Cilindro;
@@ -55,22 +53,9 @@ namespace gcgcg
             // obj_Cubo = new Cubo(objetoId, null);
             // objetosLista.Add(obj_Cubo);
             // objetoSelecionado = obj_Cubo;
-            int posAtual = 0;
-            for (int i = 0; i < 7; i++)
-            {
-                for (int j = i; j < 7; j++)
-                {
-                    objetoId = Utilitario.charProximo(objetoId);
-                    peca = new Peca(objetoId, null, i, j);
-                    objetosLista.Add(peca);
-                    Pecas.Add(peca);
-                    peca.Translacao(posAtual, 'x');
-                    peca.SalvarPosicao();
-                    posAtual += 2;
-                }
-            }
+            this.domino.CriarPecas(objetosLista);
 
-            objetoSelecionado = Pecas[0];
+            objetoSelecionado = this.domino.PegarPecaAtual();
 
             objetosLista.Add(new Chao(
                             new Ponto4D(Utilitario.RetornaMetro(20.0d), -2d),
@@ -163,27 +148,13 @@ namespace gcgcg
             {
                 if (e.Key == Key.Right)
                 {
-                    if (indexPecaAtual != Pecas.Count - 1)
-                    {
-                        indexPecaAtual++;
-                    }
-                    else
-                    {
-                        indexPecaAtual = 0;
-                    }
-                    objetoSelecionado = Pecas[indexPecaAtual];
+                    this.domino.TrocarPecaAtual("direita");
+                    objetoSelecionado = this.domino.PegarPecaAtual();
                 }
                 else if (e.Key == Key.Left)
                 {
-                    if (indexPecaAtual != 0)
-                    {
-                        indexPecaAtual--;
-                    }
-                    else
-                    {
-                        indexPecaAtual = Pecas.Count - 1;
-                    }
-                    objetoSelecionado = Pecas[indexPecaAtual];
+                    this.domino.TrocarPecaAtual("esquerda");
+                    objetoSelecionado = this.domino.PegarPecaAtual();
                 }
                 else if (e.Key == Key.A)
                 {
@@ -195,23 +166,8 @@ namespace gcgcg
                 }
                 else if (e.Key == Key.Enter)
                 {
-                    // move peça
-                    Peca pecaAtual = Pecas[indexPecaAtual];
-
-                    // trava a peça
-                    PecasPosicionadas.Add(pecaAtual);
-                    Pecas.Remove(pecaAtual);
-
-                    // Mover a peça
-                    pecaAtual.ResetarPeca();
-                    pecaAtual.Translacao(posicaoPecaPosicionada, 'y');
-
-                    // valida se esta no final
-                    if (indexPecaAtual > Pecas.Count - 1)
-                    {
-                        indexPecaAtual = Pecas.Count - 1;
-                    }
-                    objetoSelecionado = Pecas[indexPecaAtual];
+                    this.domino.JogarPeca(false);
+                    objetoSelecionado = this.domino.PegarPecaAtual();
                 }
             }
 
