@@ -10,6 +10,8 @@ namespace gcgcg
 
         public int bolinhas_esquerda = 0;
         public int bolinhas_direita = 0;
+        public bool is_conectado_esquerda = false;
+        public bool is_conectado_direita = false;
         public bool is_carroca;
         private Transformacao4D matriz;
         public Peca(char rotulo, Objeto paiRef, int bolinhas_esquerda, int bolinhas_direita) : base(rotulo, paiRef)

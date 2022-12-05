@@ -17,7 +17,8 @@ namespace gcgcg
         {
 
         }
-        private void AtualizarPosicoesPecaPosicionadas() {
+        private void AtualizarPosicoesPecaPosicionadas()
+        {
         }
 
         public void TrocarPecaAtual(string direcao)
@@ -51,14 +52,43 @@ namespace gcgcg
         {
             if (inicio)
             {
-                this.PecasPosicionadas.Insert(0, this.pecaAtual);
+                if (this.PecasPosicionadas.Count > 0)
+                {
+                    if (this.ValidaJogada(0))
+                    {
+                        this.PecasPosicionadas.Insert(0, this.pecaAtual);
+                        this.Pecas.Remove(this.pecaAtual);
+                        this.DeslocarPeca();
+                    }
+                }
+                else
+                {
+                    this.PecasPosicionadas.Insert(0, this.pecaAtual);
+                    this.Pecas.Remove(this.pecaAtual);
+                    this.DeslocarPeca();
+                }
             }
             else
             {
-                this.PecasPosicionadas.Add(this.pecaAtual);
+                if (this.PecasPosicionadas.Count > 0)
+                {
+                    if (this.ValidaJogada(this.PecasPosicionadas.Count - 1))
+                    {
+                        this.PecasPosicionadas.Add(this.pecaAtual);
+                        this.Pecas.Remove(this.pecaAtual);
+                        this.DeslocarPeca();
+                    }
+                }
+                else
+                {
+                    this.PecasPosicionadas.Add(this.pecaAtual);
+                    this.Pecas.Remove(this.pecaAtual);
+                    this.DeslocarPeca();
+                }
             }
-            this.Pecas.Remove(this.pecaAtual);
+        }
 
+        private void DeslocarPeca() {
             this.pecaAtual.ResetarPeca();
             this.pecaAtual.Translacao(this.deslocamentoParaCima, 'y');
             this.pecaAtual.Rotacao(-90, 'x');
@@ -75,9 +105,54 @@ namespace gcgcg
             this.AtualizarPosicoesPecaPosicionadas();
         }
 
+        private bool ValidaJogada(int posicaoNaLista)
+        {
+            Peca pecaParaConectar = this.PecasPosicionadas[posicaoNaLista];
+
+            if (!pecaParaConectar.is_conectado_direita)
+            {
+                if (pecaParaConectar.bolinhas_direita == this.pecaAtual.bolinhas_direita)
+                {
+                    pecaParaConectar.is_conectado_direita = true;
+                    this.pecaAtual.is_conectado_direita = true;
+                    return true;
+
+                }
+                else if (pecaParaConectar.bolinhas_direita == this.pecaAtual.bolinhas_esquerda)
+                {
+                    pecaParaConectar.is_conectado_direita = true;
+                    this.pecaAtual.is_conectado_esquerda = true;
+                    return true;
+                }
+            }
+            else if (!pecaParaConectar.is_conectado_esquerda)
+            {
+                if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_direita)
+                {
+                    pecaParaConectar.is_conectado_esquerda = true;
+                    this.pecaAtual.is_conectado_direita = true;
+                    return true;
+                }
+                else if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_esquerda)
+                {
+                    pecaParaConectar.is_conectado_esquerda = true;
+                    this.pecaAtual.is_conectado_esquerda = true;
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void AtualizarPecaAtual()
         {
+            if (this.pecaAtual != null)
+            {
+                this.pecaAtual.Translacao(-1, 'y');
+            }
+
             this.pecaAtual = this.Pecas[indexPecaAtual];
+
+            this.pecaAtual.Translacao(1, 'y');
         }
 
         public void CriarPecas(List<Objeto> objetosLista)
