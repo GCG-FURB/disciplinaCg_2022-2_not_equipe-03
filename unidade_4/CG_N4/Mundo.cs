@@ -41,6 +41,7 @@ namespace gcgcg
 #endif
         private Cubo obj_Cubo;
         private Peca peca;
+        private Bola bola;
 
         protected override void OnLoad(EventArgs e)
         {
@@ -53,6 +54,12 @@ namespace gcgcg
             // obj_Cubo = new Cubo(objetoId, null);
             // objetosLista.Add(obj_Cubo);
             // objetoSelecionado = obj_Cubo;
+
+            // objetoId = Utilitario.charProximo(objetoId);
+            // bola = new Bola(objetoId, null);
+            // objetosLista.Add(bola);
+            // objetoSelecionado = bola;
+
             this.domino.CriarPecas(objetosLista);
 
             objetoSelecionado = this.domino.PegarPecaAtual();

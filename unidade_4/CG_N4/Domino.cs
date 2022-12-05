@@ -17,6 +17,8 @@ namespace gcgcg
         {
 
         }
+        private void AtualizarPosicoesPecaPosicionadas() {
+        }
 
         public void TrocarPecaAtual(string direcao)
         {
@@ -42,14 +44,14 @@ namespace gcgcg
                     this.indexPecaAtual = this.Pecas.Count - 1;
                 }
             }
-            this.pecaAtual = this.Pecas[this.indexPecaAtual];
+            this.AtualizarPecaAtual();
         }
 
         public void JogarPeca(bool inicio)
         {
             if (inicio)
             {
-                this.PecasPosicionadas.Add(this.pecaAtual);
+                this.PecasPosicionadas.Insert(0, this.pecaAtual);
             }
             else
             {
@@ -69,6 +71,12 @@ namespace gcgcg
             {
                 this.indexPecaAtual = this.Pecas.Count - 1;
             }
+            this.AtualizarPecaAtual();
+            this.AtualizarPosicoesPecaPosicionadas();
+        }
+
+        private void AtualizarPecaAtual()
+        {
             this.pecaAtual = this.Pecas[indexPecaAtual];
         }
 
@@ -88,7 +96,7 @@ namespace gcgcg
                     posAtual += 2;
                 }
             }
-            this.pecaAtual = this.Pecas[this.indexPecaAtual];
+            this.AtualizarPecaAtual();
         }
         public Peca PegarPecaAtual()
         {
