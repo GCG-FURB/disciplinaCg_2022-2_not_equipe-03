@@ -167,7 +167,7 @@ namespace gcgcg
                 }
                 else if (e.Key == Key.I) // inicio da fila
                 {
-                    this.domino.JogarPeca(true);
+                    bool jogada = this.domino.JogarPeca(true);
                     objetoSelecionado = this.domino.PegarPecaAtual();
                 }
                 else if (e.Key == Key.F) // fim da fila

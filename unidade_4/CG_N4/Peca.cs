@@ -10,6 +10,8 @@ namespace gcgcg
 
         public int bolinhas_esquerda = 0;
         public int bolinhas_direita = 0;
+
+        public int transalacao_inicial = 0;
         public bool is_conectado_esquerda = false;
         public bool is_conectado_direita = false;
         public bool is_carroca;
@@ -57,37 +59,37 @@ namespace gcgcg
                 case 0:
                     break;
                 case 1:
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48, true));
                     break;
                 case 2:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
                     break;
                 case 3:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
                     break;
                 case 4:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48, true));
                     break;
                 case 5:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48, true));
                     break;
                 case 6:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.77, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.77, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.77, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.77, 0.31), 0.1, 48, true));
                     break;
 
             }
@@ -171,7 +173,7 @@ namespace gcgcg
         }
         public void ResetarPeca()
         {
-            base.matriz = this.matriz;
+            this.Translacao(this.transalacao_inicial, 'x');
         }
         public void CriarPontos()
         {
@@ -239,7 +241,7 @@ namespace gcgcg
 
         }
 
-        class DivisoriaPeca : Objeto
+        class DivisoriaPeca : ObjetoGeometria
         {
 
             public readonly double Altura;
@@ -268,12 +270,12 @@ namespace gcgcg
 
             }
 
-            protected override void DesenharGeometria()
-            {
-                DesenharDivisoria();
-            }
+            // protected override void DesenharGeometria()
+            // {
+            //     DesenharDivisoria();
+            // }
 
-            private void DesenharDivisoria()
+            protected override void DesenharObjeto()
             {
                 double x = PontoInicial.X;
                 double y = PontoInicial.Y;

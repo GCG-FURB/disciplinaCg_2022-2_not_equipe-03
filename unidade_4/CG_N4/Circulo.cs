@@ -14,15 +14,19 @@ namespace gcgcg
         Ponto4D ptoCentral;
         int qtdPontos;
         double raio;
+        bool corVermelho;
         public Circulo(
             Ponto4D ptoCentral,
             double raio,
-            int qtdPontos
+            int qtdPontos,
+            bool corVermelho = false
              ) : base('c', null)
         {
             this.ptoCentral = ptoCentral;
             this.qtdPontos = qtdPontos;
             this.raio = raio;
+            base.PrimitivaTamanho = 5;
+            this.corVermelho = corVermelho;
             // Distancia entre os pontos
             this.AtualizarPontos();
         }
@@ -60,7 +64,15 @@ namespace gcgcg
             GL.Begin(base.PrimitivaTipo);
             foreach (Ponto4D pto in pontosLista)
             {
-                GL.Color3(0f, 0f, 0f);
+                if (this.corVermelho)
+                {
+                    GL.Color3(1.0f, 0.0f, 0.0f);
+
+                }
+                else
+                {
+                    GL.Color3(0.0f, 0.0f, 0.0f);
+                }
                 GL.Vertex3(pto.X, pto.Y, pto.Z);
             }
             GL.End();
