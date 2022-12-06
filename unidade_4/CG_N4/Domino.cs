@@ -13,7 +13,7 @@ namespace gcgcg
         private int deslocamentoParaCima = 4;
         private double TransalacaoParaEsquerda = 0;
         private double TransalacaoParaDireita = 0;
-        private List<Peca> Pecas = new List<Peca>();
+        public List<Peca> Pecas = new List<Peca>();
         private List<Peca> PecasPosicionadas = new List<Peca>();
         public Domino()
         {
@@ -53,7 +53,7 @@ namespace gcgcg
             {
                 if (this.PecasPosicionadas.Count > 0)
                 {
-                    string jogada = this.ValidaJogada(0);
+                    string jogada = this.ValidaJogada(inicio, 0);
                     if (!jogada.Equals("nao pode"))
                     {
                         this.PecasPosicionadas.Insert(0, this.pecaAtual);
@@ -77,7 +77,7 @@ namespace gcgcg
             {
                 if (this.PecasPosicionadas.Count > 0)
                 {
-                    string jogada = this.ValidaJogada(this.PecasPosicionadas.Count - 1);
+                    string jogada = this.ValidaJogada(inicio, this.PecasPosicionadas.Count - 1);
                     if (!jogada.Equals("nao pode"))
                     {
                         this.PecasPosicionadas.Add(this.pecaAtual);
@@ -108,12 +108,18 @@ namespace gcgcg
             }
             return false;
         }
-        private void CalculaNovaPosicaoPeca(bool inicio, string jogada)
+
+        private void ColocarPecaNoInicio()
         {
             this.pecaAtual.ResetarPeca();
             this.pecaAtual.Translacao(4, 'z');
             this.pecaAtual.Rotacao(-90, 'x');
             this.pecaAtual.Translacao(-2, 'y');
+        }
+
+        private bool CalculaNovaPosicaoPeca(bool inicio, string jogada)
+        {
+            this.ColocarPecaNoInicio();
 
             if (this.PecasPosicionadas.Count > 1)
             {
@@ -131,11 +137,34 @@ namespace gcgcg
 
                     if (inicio)
                     {
+                        // if (this.PecasPosicionadas[1].bolinhas_direita == this.pecaAtual.bolinhas_esquerda)
+                        // {
+                        //     int bolinhas = 0;
+                        //     bolinhas = this.PecasPosicionadas[1].bolinhas_esquerda;
+                        //     this.PecasPosicionadas[1].bolinhas_esquerda = this.PecasPosicionadas[1].bolinhas_direita;
+                        //     this.PecasPosicionadas[1].bolinhas_direita = bolinhas;
+                        //     this.pecaAtual.Rotacao(90, 'z');
+                        // }
+                        // else if (this.PecasPosicionadas[1].bolinhas_direita == this.pecaAtual.bolinhas_direita)
+                        // {
+                        //     this.pecaAtual.Rotacao(-90, 'z');
+                        // }
+
                         this.TransalacaoParaDireita += 2.21;
                         this.pecaAtual.Translacao(TransalacaoParaDireita, 'x');
                     }
                     else
                     {
+                        // if (this.PecasPosicionadas[PecasPosicionadas.Count - 1].bolinhas_esquerda == this.pecaAtual.bolinhas_esquerda)
+                        // {
+                        //     this.pecaAtual.Rotacao(-90, 'z');
+                        // }
+                        // else if (this.PecasPosicionadas[PecasPosicionadas.Count - 1].bolinhas_esquerda == this.pecaAtual.bolinhas_direita)
+                        // {
+                        //     this.pecaAtual.Rotacao(90, 'z');
+                        // }
+
+
                         this.TransalacaoParaEsquerda -= 2.21;
                         this.pecaAtual.Translacao(TransalacaoParaEsquerda, 'x');
                     }
@@ -154,12 +183,11 @@ namespace gcgcg
                     }
                 }
             }
-
-            if (this.indexPecaAtual > this.Pecas.Count - 1)
-            {
-                this.indexPecaAtual = this.Pecas.Count - 1;
-            }
             this.AtualizarPecaAtual();
+            if (this.Pecas.Count == 0) {
+                return true;
+            }
+            return false;
         }
 
         private void DeslocarPeca()
@@ -179,35 +207,36 @@ namespace gcgcg
 
         }
 
-        private string ValidaJogada(int posicaoNaLista)
+        private string ValidaJogada(bool inicio, int posicaoNaLista)
         {
             Peca pecaParaConectar = this.PecasPosicionadas[posicaoNaLista];
 
-            if (!pecaParaConectar.is_conectado_direita)
+            if (inicio)
             {
-                if (pecaParaConectar.bolinhas_direita == this.pecaAtual.bolinhas_direita)
+                if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_direita)
                 {
                     pecaParaConectar.is_conectado_direita = true;
                     this.pecaAtual.is_conectado_direita = true;
                     return "lado certo";
-
                 }
-                else if (pecaParaConectar.bolinhas_direita == this.pecaAtual.bolinhas_esquerda)
+                else if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_esquerda)
                 {
                     pecaParaConectar.is_conectado_direita = true;
-                    this.pecaAtual.is_conectado_esquerda = true;
+                    this.pecaAtual.is_conectado_direita = true;
+                    this.pecaAtual.GirarPecaLogica();
                     return "cruzado";
                 }
             }
-            else if (!pecaParaConectar.is_conectado_esquerda || PecasPosicionadas.Count == 1)
+            else
             {
-                if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_direita)
+                if (pecaParaConectar.bolinhas_direita == this.pecaAtual.bolinhas_direita)
                 {
                     pecaParaConectar.is_conectado_esquerda = true;
-                    this.pecaAtual.is_conectado_direita = true;
+                    this.pecaAtual.is_conectado_esquerda = true;
+                    this.pecaAtual.GirarPecaLogica();
                     return "cruzado";
                 }
-                else if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_esquerda)
+                else if (pecaParaConectar.bolinhas_direita == this.pecaAtual.bolinhas_esquerda)
                 {
                     pecaParaConectar.is_conectado_esquerda = true;
                     this.pecaAtual.is_conectado_esquerda = true;
@@ -219,6 +248,14 @@ namespace gcgcg
 
         private void AtualizarPecaAtual()
         {
+            if (this.Pecas.Count == 0) {
+                return;
+            }
+            if (this.indexPecaAtual > this.Pecas.Count - 1)
+            {
+                this.indexPecaAtual = this.Pecas.Count - 1;
+            }
+
             if (this.pecaAtual != null)
             {
                 this.pecaAtual.Translacao(-1, 'y');

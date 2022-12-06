@@ -112,6 +112,10 @@ namespace gcgcg
 #if CG_Gizmo
             Sru3D();
 #endif
+            if (domino.Pecas.Count == 0) {
+                Console.WriteLine("FIM DE JOGO!");
+                Exit();
+            }
             for (var i = 0; i < objetosLista.Count; i++)
                 objetosLista[i].Desenhar();
             if (bBoxDesenhar && (objetoSelecionado != null))

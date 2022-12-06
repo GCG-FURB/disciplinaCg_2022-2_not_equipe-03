@@ -188,6 +188,12 @@ namespace gcgcg
             // Peça (1X3X1)
         }
 
+        public void GirarPecaLogica() {
+            int bolinha = this.bolinhas_direita;
+            this.bolinhas_direita = this.bolinhas_esquerda;
+            this.bolinhas_esquerda = bolinha;
+        }
+
         class BolinhaPeca : ObjetoGeometria
         {
             public readonly int Segmentos;
