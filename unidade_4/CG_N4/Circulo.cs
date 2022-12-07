@@ -27,6 +27,7 @@ namespace gcgcg
             this.raio = raio;
             base.PrimitivaTamanho = 5;
             this.corVermelho = corVermelho;
+            base.PrimitivaTipo = PrimitiveType.Points;
             // Distancia entre os pontos
             this.AtualizarPontos();
         }

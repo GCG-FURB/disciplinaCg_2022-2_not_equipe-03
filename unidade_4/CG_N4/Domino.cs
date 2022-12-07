@@ -137,35 +137,12 @@ namespace gcgcg
 
                     if (inicio)
                     {
-                        // if (this.PecasPosicionadas[1].bolinhas_direita == this.pecaAtual.bolinhas_esquerda)
-                        // {
-                        //     int bolinhas = 0;
-                        //     bolinhas = this.PecasPosicionadas[1].bolinhas_esquerda;
-                        //     this.PecasPosicionadas[1].bolinhas_esquerda = this.PecasPosicionadas[1].bolinhas_direita;
-                        //     this.PecasPosicionadas[1].bolinhas_direita = bolinhas;
-                        //     this.pecaAtual.Rotacao(90, 'z');
-                        // }
-                        // else if (this.PecasPosicionadas[1].bolinhas_direita == this.pecaAtual.bolinhas_direita)
-                        // {
-                        //     this.pecaAtual.Rotacao(-90, 'z');
-                        // }
-
-                        this.TransalacaoParaDireita += 2.21;
+                        this.TransalacaoParaDireita += 2.25;
                         this.pecaAtual.Translacao(TransalacaoParaDireita, 'x');
                     }
                     else
                     {
-                        // if (this.PecasPosicionadas[PecasPosicionadas.Count - 1].bolinhas_esquerda == this.pecaAtual.bolinhas_esquerda)
-                        // {
-                        //     this.pecaAtual.Rotacao(-90, 'z');
-                        // }
-                        // else if (this.PecasPosicionadas[PecasPosicionadas.Count - 1].bolinhas_esquerda == this.pecaAtual.bolinhas_direita)
-                        // {
-                        //     this.pecaAtual.Rotacao(90, 'z');
-                        // }
-
-
-                        this.TransalacaoParaEsquerda -= 2.21;
+                        this.TransalacaoParaEsquerda -= 2.25;
                         this.pecaAtual.Translacao(TransalacaoParaEsquerda, 'x');
                     }
                 }
@@ -173,21 +150,25 @@ namespace gcgcg
                 {
                     if (inicio)
                     {
-                        this.TransalacaoParaDireita += 2.2;
+                        this.TransalacaoParaDireita += 2.25;
                         this.pecaAtual.Translacao(TransalacaoParaDireita, 'x');
                     }
                     else
                     {
-                        this.TransalacaoParaEsquerda -= 2.2;
+                        this.TransalacaoParaEsquerda -= 2.25;
                         this.pecaAtual.Translacao(TransalacaoParaEsquerda, 'x');
                     }
                 }
             }
             this.AtualizarPecaAtual();
-            if (this.Pecas.Count == 0) {
+            if (this.Pecas.Count == 0)
+            {
                 return true;
             }
             return false;
+        }
+        public void AtualizarPrimitivaDivisoria() {
+            this.pecaAtual.AtualizarPrimitivaDivisoria();
         }
 
         private void DeslocarPeca()
@@ -248,7 +229,8 @@ namespace gcgcg
 
         private void AtualizarPecaAtual()
         {
-            if (this.Pecas.Count == 0) {
+            if (this.Pecas.Count == 0)
+            {
                 return;
             }
             if (this.indexPecaAtual > this.Pecas.Count - 1)
@@ -268,7 +250,7 @@ namespace gcgcg
 
         public void CriarPecas(List<Objeto> objetosLista)
         {
-            int posAtual = 0;
+            float posAtual = 0;
             for (int i = 0; i < 7; i++)
             {
                 for (int j = i; j < 7; j++)
@@ -280,7 +262,7 @@ namespace gcgcg
                     peca.Translacao(posAtual, 'x');
                     peca.transalacao_inicial = posAtual * -1;
                     peca.SalvarPosicao();
-                    posAtual += 2;
+                    posAtual += 4.5f;
                 }
             }
             this.AtualizarPecaAtual();

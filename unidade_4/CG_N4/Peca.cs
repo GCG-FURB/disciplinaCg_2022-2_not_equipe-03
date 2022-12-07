@@ -11,24 +11,15 @@ namespace gcgcg
         public int bolinhas_esquerda = 0;
         public int bolinhas_direita = 0;
 
-        public int transalacao_inicial = 0;
+        public float transalacao_inicial = 0;
         public bool is_conectado_esquerda = false;
         public bool is_conectado_direita = false;
         public bool is_carroca;
+
+        private Retangulo divisoria;
         private Transformacao4D matriz;
         public Peca(char rotulo, Objeto paiRef, int bolinhas_esquerda, int bolinhas_direita) : base(rotulo, paiRef)
         {
-
-            // // DESSA MANEIRA A PEÇA FICA DE LADO
-            // base.PontosAdicionar(new Ponto4D(-1.5, -0.7, 0.3)); // PtoA listaPto[0] 
-            // base.PontosAdicionar(new Ponto4D(1.5, -0.7, 0.3)); // PtoB listaPto[1]
-            // base.PontosAdicionar(new Ponto4D(1.5, 0.7, 0.3)); // PtoC listaPto[2]
-            // base.PontosAdicionar(new Ponto4D(-1.5, 0.7, 0.3)); // PtoD listaPto[3]
-            // base.PontosAdicionar(new Ponto4D(-1.5, -0.7, -0.3)); // PtoE listaPto[4]
-            // base.PontosAdicionar(new Ponto4D(1.5, -0.7, -0.3)); // PtoF listaPto[5]
-            // base.PontosAdicionar(new Ponto4D(1.5, 0.7, -0.3)); // PtoG listaPto[6]
-            // base.PontosAdicionar(new Ponto4D(-1.5, 0.7, -0.3)); // PtoH listaPto[7]
-
             this.CriarPontos();
             this.bolinhas_esquerda = bolinhas_esquerda;
             this.bolinhas_direita = bolinhas_direita;
@@ -43,53 +34,45 @@ namespace gcgcg
                 this.is_carroca = false;
             }
 
-            // DESSA MANEIRA A LINHA DIVISORIA DA PRA USAR COM A PEÇA DE LADO
-            //FilhoAdicionar(new DivisoriaPeca(new Ponto4D(-0.1, -0.6, 0.31), 1.2, 0.2, 0));
-
-            // DESSA MANEIRA A LINHA DIVISORIA DA PRA USAR COM A PEÇA EM PÉ
-            FilhoAdicionar(new DivisoriaPeca(new Ponto4D(-0.65, -0.1, 0.31), 0.2, 1.31, 0));
-
-            //ADICIONAR BOLINHA
-            // BolinhaPeca bolinha = new BolinhaPeca(new Ponto4D(-0.65, -0.1, 0.1));
-            // bolinha.Rotacao(90, 'x');
-            // FilhoAdicionar(bolinha);
+            this.divisoria = new Retangulo(new Ponto4D(0, 2, 0.901), new Ponto4D(2.5, 2.5, 0.901));
+            FilhoAdicionar(this.divisoria);
 
             switch (this.bolinhas_esquerda)
             {
                 case 0:
                     break;
                 case 1:
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(1.25, 3.5, 0.901), 0.2, 72, true)); // Ponto do meio
                     break;
                 case 2:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 4, 0.901), 0.2, 72, true)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 3, 0.901), 0.2, 72, true)); // Ponto de baixo direita
                     break;
                 case 3:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 4, 0.901), 0.2, 72, true)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(1.25, 3.5, 0.901), 0.2, 72, true)); // Ponto do meio
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 3, 0.901), 0.2, 72, true)); // Ponto de baixo direita
                     break;
                 case 4:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 4, 0.901), 0.2, 72, true)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 4, 0.901), 0.2, 72, true)); // Ponto de cima direita
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 3, 0.901), 0.2, 72, true)); // Ponto de baixo esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 3, 0.901), 0.2, 72, true)); // Ponto de baixo direita
                     break;
                 case 5:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 4, 0.901), 0.2, 72, true)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 4, 0.901), 0.2, 72, true)); // Ponto de cima direita
+                    FilhoAdicionar(new Circulo(new Ponto4D(1.25, 3.5, 0.901), 0.2, 72, true)); // Ponto do meio
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 3, 0.901), 0.2, 72, true)); // Ponto de baixo esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 3, 0.901), 0.2, 72, true)); // Ponto de baixo direita
                     break;
                 case 6:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.77, 0.31), 0.1, 48, true));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.77, 0.31), 0.1, 48, true));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 4, 0.901), 0.2, 72, true)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 4, 0.901), 0.2, 72, true)); // Ponto de cima direita
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 3.5, 0.901), 0.2, 72, true)); // Ponto de baixo mei
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 3.5, 0.901), 0.2, 72, true)); // Ponto de cima meio
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 3, 0.901), 0.2, 72, true)); // Ponto de baixo esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 3, 0.901), 0.2, 72, true)); // Ponto de baixo direita
                     break;
 
             }
@@ -99,73 +82,45 @@ namespace gcgcg
                 case 0:
                     break;
                 case 1:
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, -0.75, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(1.25, 1, 0.901), 0.2, 72)); // Ponto do meio
                     break;
                 case 2:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -1.1, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 1.5, 0.901), 0.2, 72)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 0.5, 0.901), 0.2, 72)); // Ponto de baixo direita
                     break;
                 case 3:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, -0.75, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -1.1, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 1.5, 0.901), 0.2, 72)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(1.25, 1, 0.901), 0.2, 72)); // Ponto do meio
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 0.5, 0.901), 0.2, 72)); // Ponto de baixo direita
                     break;
                 case 4:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -1.1, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -1.1, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 1.5, 0.901), 0.2, 72)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 1.5, 0.901), 0.2, 72)); // Ponto de cima direita
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 0.5, 0.901), 0.2, 72)); // Ponto de baixo esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 0.5, 0.901), 0.2, 72)); // Ponto de baixo direita
                     break;
                 case 5:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0, -0.75, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -1.1, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -1.1, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 1.5, 0.901), 0.2, 72)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 1.5, 0.901), 0.2, 72)); // Ponto de cima direita
+                    FilhoAdicionar(new Circulo(new Ponto4D(1.25, 1, 0.901), 0.2, 48)); // Ponto do meio
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 0.5, 0.901), 0.2, 72)); // Ponto de baixo esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 0.5, 0.901), 0.2, 72)); // Ponto de baixo direita
                     break;
                 case 6:
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -0.46, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -1.1, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -1.1, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(-0.4, -0.77, 0.31), 0.1, 48));
-                    FilhoAdicionar(new Circulo(new Ponto4D(0.4, -0.77, 0.31), 0.1, 48));
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 1.5, 0.901), 0.2, 72)); // Ponto de cima esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 1.5, 0.901), 0.2, 72)); // Ponto de cima direita
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 1, 0.901), 0.2, 72)); // Ponto de baixo mei
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 1, 0.901), 0.2, 72)); // Ponto de cima meio
+                    FilhoAdicionar(new Circulo(new Ponto4D(0.5, 0.5, 0.901), 0.2, 72)); // Ponto de baixo esquerda
+                    FilhoAdicionar(new Circulo(new Ponto4D(2, 0.5, 0.901), 0.2, 72)); // Ponto de baixo direita
                     break;
 
             }
-            // NUMERO 1
-            //FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48));
+        }
 
-            // NUMERO 2
-            // FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-            // FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
-
-            // NUMERO 3
-            //FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
-
-            // NUMERO 4
-            // FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48));
-
-            // NUMERO 5
-            //FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(0, 0.75, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
-            //FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48));
-
-            // NUMERO 6
-            // FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.46, 0.31), 0.1, 48));
-            // FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.46, 0.31), 0.1, 48));
-            // FilhoAdicionar(new Circulo(new Ponto4D(0.4, 1.1, 0.31), 0.1, 48));
-            // FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 1.1, 0.31), 0.1, 48));
-            // FilhoAdicionar(new Circulo(new Ponto4D(-0.4, 0.77, 0.31), 0.1, 48));
-            // FilhoAdicionar(new Circulo(new Ponto4D(0.4, 0.77, 0.31), 0.1, 48));
-
+        public void AtualizarPrimitivaDivisoria()
+        {
+            this.divisoria.ProximaPrimitiva();
         }
         public void SalvarPosicao()
         {
@@ -177,146 +132,22 @@ namespace gcgcg
         }
         public void CriarPontos()
         {
-            base.PontosAdicionar(new Ponto4D(-0.7, -1.5, 0.3)); // PtoA listaPto[0]
-            base.PontosAdicionar(new Ponto4D(0.7, -1.5, 0.3)); // PtoB listaPto[1]
-            base.PontosAdicionar(new Ponto4D(0.7, 1.5, 0.3)); // PtoC listaPto[2]
-            base.PontosAdicionar(new Ponto4D(-0.7, 1.5, 0.3)); // PtoD listaPto[3]
-            base.PontosAdicionar(new Ponto4D(-0.7, -1.5, -0.3)); // PtoE listaPto[4]
-            base.PontosAdicionar(new Ponto4D(0.7, -1.5, -0.3)); // PtoF listaPto[5]
-            base.PontosAdicionar(new Ponto4D(0.7, 1.5, -0.3)); // PtoG listaPto[6]
-            base.PontosAdicionar(new Ponto4D(-0.7, 1.5, -0.3)); // PtoH listaPto[7]
-            // Peça (1X3X1)
+            base.PontosAdicionar(new Ponto4D(0, 0, 0)); // PtoA listaPto[0]
+            base.PontosAdicionar(new Ponto4D(0, 0, 0.9)); // PtoB listaPto[1]
+            base.PontosAdicionar(new Ponto4D(0, 4.5, 0.9)); // PtoD listaPto[3]
+            base.PontosAdicionar(new Ponto4D(0, 4.5, 0)); // PtoC listaPto[2]
+            base.PontosAdicionar(new Ponto4D(2.5, 0, 0)); // PtoA listaPto[0]
+            base.PontosAdicionar(new Ponto4D(2.5, 0, 0.9)); // PtoB listaPto[1]
+            base.PontosAdicionar(new Ponto4D(2.5, 4.5, 0.9)); // PtoD listaPto[3]
+            base.PontosAdicionar(new Ponto4D(2.5, 4.5, 0)); // PtoC listaPto[2]
+            // Peça (2.5 X 4.5 X 0.9)
         }
 
-        public void GirarPecaLogica() {
+        public void GirarPecaLogica()
+        {
             int bolinha = this.bolinhas_direita;
             this.bolinhas_direita = this.bolinhas_esquerda;
             this.bolinhas_esquerda = bolinha;
-        }
-
-        class BolinhaPeca : ObjetoGeometria
-        {
-            public readonly int Segmentos;
-            public readonly double Raio;
-            public readonly int Altura;
-            public readonly Ponto4D PontoInicial;
-            protected List<int> listaTopologia = new List<int>();
-
-            public BolinhaPeca(Ponto4D ponto) : base('b', null)
-            {
-                int segments = 40; // Números mais altos melhoram a qualidade 
-                double radius = 0.1;    // O raio (largura) do cilindro
-                int height = 1;   // A altura do cilindro
-
-                for (double y = 0; y < 2; y++)
-                {
-                    for (double x = 0; x < segments; x++)
-                    {
-                        double theta = (x / (segments - 1)) * 2 * Math.PI;
-                        base.PontosAdicionar(new Ponto4D(
-                            (float)(radius * Math.Cos(theta)),
-                            (float)(height * y),
-                            (float)(radius * Math.Sin(theta))));
-                    }
-                }
-
-                for (int x = 0; x < segments - 1; x++)
-                {
-                    listaTopologia.Add(x + segments + 1);
-                    listaTopologia.Add(x + segments);
-                    listaTopologia.Add(segments);
-                }
-
-            }
-
-            // protected override void DesenharGeometria()
-            // {
-            //     DesenharBolinha();
-            // }
-
-            protected override void DesenharObjeto()
-            {
-                GL.Begin(PrimitiveType.Triangles);
-                foreach (int index in listaTopologia)
-                {
-                    GL.Color3(0.0f, 0.0f, 0.0f);
-                    GL.Vertex3(base.pontosLista[index].X, base.pontosLista[index].Y, base.pontosLista[index].Z);
-                }
-                GL.End();
-            }
-
-        }
-
-        class DivisoriaPeca : ObjetoGeometria
-        {
-
-            public readonly double Altura;
-
-            public readonly double Comprimento;
-
-            public readonly double Largura;
-
-            public readonly Ponto4D PontoInicial;
-
-            public DivisoriaPeca(Ponto4D ponto, double altura, double comprimento, double largura) : base('d', null)
-            {
-
-                PrimitivaTipo = PrimitiveType.Quads;
-                ObjetoCor = new Cor(100, 100, 100);
-                PrimitivaTamanho = 1;
-
-                Altura = altura;
-                Comprimento = comprimento;
-                Largura = largura;
-                PontoInicial = ponto;
-
-                BBox.Atribuir(ponto);
-                BBox.Atualizar(ponto + new Ponto4D(comprimento, altura, largura));
-                BBox.ProcessarCentro();
-
-            }
-
-            // protected override void DesenharGeometria()
-            // {
-            //     DesenharDivisoria();
-            // }
-
-            protected override void DesenharObjeto()
-            {
-                double x = PontoInicial.X;
-                double y = PontoInicial.Y;
-                double z = PontoInicial.Z;
-
-                double a = Altura;
-                double c = Comprimento;
-                double l = Largura;
-
-                GL.Color3(0, 0, 0);
-
-                GL.Begin(PrimitiveType.LineLoop);
-
-                GL.Normal3(0, 0, 1);
-                GL.Vertex3(x, y, z);
-                GL.Vertex3(x, y + a, z);
-                GL.Vertex3(x + c, y + a, z);
-                GL.Vertex3(x + c, y, z);
-
-                GL.End();
-                GL.Begin(PrimitiveType.LineLoop);
-
-                z -= 0;
-                GL.Normal3(0, 0, 1);
-                GL.Vertex3(x, y, z);
-                GL.Vertex3(x, y, z + l);
-                GL.Vertex3(x, y + a, z + l);
-                GL.Vertex3(x, y + a, z);
-
-                GL.End();
-                GL.Begin(PrimitiveType.LineLoop);
-
-                GL.End();
-            }
-
         }
 
         protected override void DesenharObjeto()
@@ -381,6 +212,5 @@ namespace gcgcg
             }
             return (retorno);
         }
-
     }
 }

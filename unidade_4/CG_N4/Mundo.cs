@@ -179,6 +179,10 @@ namespace gcgcg
                     this.domino.JogarPeca(false);
                     objetoSelecionado = this.domino.PegarPecaAtual();
                 }
+                else if (e.Key == Key.Q) // troca primitiva
+                {
+                    this.domino.AtualizarPrimitivaDivisoria();
+                }
             }
 
             // Menu: seleção
