@@ -109,14 +109,14 @@ namespace gcgcg
                 objetoSelecionado = null;                     // desmacar objeto selecionado
             else if (e.Key == Key.B)
                 bBoxDesenhar = !bBoxDesenhar;     //FIXME: bBox não está sendo atualizada.
-            else if (e.Key == Key.E)
-            {
-                Console.WriteLine("--- Objetos / Pontos: ");
-                for (var i = 0; i < objetosLista.Count; i++)
-                {
-                    Console.WriteLine(objetosLista[i]);
-                }
-            }
+            // else if (e.Key == Key.E)
+            // {
+            //     Console.WriteLine("--- Objetos / Pontos: ");
+            //     for (var i = 0; i < objetosLista.Count; i++)
+            //     {
+            //         Console.WriteLine(objetosLista[i]);
+            //     }
+            // }
             //--------------------------------------------------------------
             else if (e.Key == Key.X) menuEixoSelecao = 'x';
             else if (e.Key == Key.Y) menuEixoSelecao = 'y';
@@ -131,6 +131,14 @@ namespace gcgcg
                 {
                     this.domino.TrocarPecaAtual("direita");
                     objetoSelecionado = this.domino.PegarPecaAtual();
+                }
+                else if (e.Key == Key.Q)
+                {
+                    this.domino.MoverTodasPecas("esquerda");
+                }
+                else if (e.Key == Key.E)
+                {
+                    this.domino.MoverTodasPecas("direita");
                 }
                 else if (e.Key == Key.Left)
                 {
@@ -155,7 +163,7 @@ namespace gcgcg
                     this.domino.JogarPeca(false);
                     objetoSelecionado = this.domino.PegarPecaAtual();
                 }
-                else if (e.Key == Key.Q) // troca primitiva
+                else if (e.Key == Key.W) // troca primitiva
                 {
                     this.domino.AtualizarPrimitivaDivisoria();
                 }

@@ -206,23 +206,6 @@ namespace gcgcg
             this.pecaAtual.AtualizarPrimitivaDivisoria();
         }
 
-        private void DeslocarPeca()
-        {
-            this.pecaAtual.ResetarPeca();
-            this.pecaAtual.Translacao(this.deslocamentoParaCima, 'y');
-            this.pecaAtual.Rotacao(-90, 'x');
-            if (!this.pecaAtual.is_carroca)
-            {
-                this.pecaAtual.Rotacao(90, 'z');
-            }
-
-            if (this.indexPecaAtual > this.Pecas.Count - 1)
-            {
-                this.indexPecaAtual = this.Pecas.Count - 1;
-            }
-
-        }
-
         private string ValidaJogada(bool inicio, int posicaoNaLista)
         {
             Peca pecaParaConectar = this.PecasPosicionadas[posicaoNaLista];
@@ -301,6 +284,22 @@ namespace gcgcg
                 }
             }
             this.AtualizarPecaAtual();
+        }
+
+        public void MoverTodasPecas(string lado) {
+            float posAtual = 0;
+            if (lado.Equals("esquerda")) {
+                posAtual = -4.5f;
+            }
+            else {
+                posAtual = 4.5f;
+            }
+            
+            foreach (Peca peca in this.Pecas)
+            {
+                peca.transalacao_inicial += posAtual * -1;
+                peca.Translacao(posAtual, 'x');
+            }
         }
         public Peca PegarPecaAtual()
         {
