@@ -140,8 +140,12 @@ namespace gcgcg
             {
                 return;
             }
+            if (this.pecaAtual.is_carroca) {
+                this.pecaAtual.Translacao(this.TransalacaoParaDireita, 'x'); // Move a peça pra posição certa
+                this.TransalacaoParaDireita += 2.5;
+            }
 
-            if (inicio)
+            else if (inicio)
             {
                 if (this.TransalacaoParaDireita == 0) // Translação apenas para a primeira peça
                 {
