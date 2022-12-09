@@ -129,6 +129,7 @@ namespace gcgcg
         public void ResetarPeca()
         {
             this.Translacao(this.transalacao_inicial, 'x');
+            Console.WriteLine("peca - " + this.transalacao_inicial);
         }
         public void CriarPontos()
         {
@@ -182,7 +183,7 @@ namespace gcgcg
             GL.Vertex3(base.pontosLista[5].X, base.pontosLista[5].Y, base.pontosLista[5].Z);    // PtoF
             GL.Vertex3(base.pontosLista[1].X, base.pontosLista[1].Y, base.pontosLista[1].Z);    // PtoB
                                                                                                 // Face da direita (ciano)
-            GL.Color3(0.0f, 1.0f, 1.0f);
+            GL.Color3(1.0f, 1.0f, 1.0f);
             GL.Normal3(1, 0, 0);
             GL.Vertex3(base.pontosLista[1].X, base.pontosLista[1].Y, base.pontosLista[1].Z);    // PtoB
             GL.Vertex3(base.pontosLista[5].X, base.pontosLista[5].Y, base.pontosLista[5].Z);    // PtoF

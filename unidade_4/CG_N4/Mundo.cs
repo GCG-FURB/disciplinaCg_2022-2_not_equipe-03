@@ -31,57 +31,32 @@ namespace gcgcg
         private char menuEixoSelecao = 'z';
         private float deslocamento = 1;
         private bool bBoxDesenhar = false;
-        private int indexPecaAtual = 0;
         Domino domino = new Domino();
 
-#if CG_Privado
-    private Cilindro obj_Cilindro;
-    private Esfera obj_Esfera;
-    private Cone obj_Cone;
-#endif
-        private Cubo obj_Cubo;
-        private Peca peca;
+        private void ResetarCamera()
+        {
+            Vector3 vector = Vector3.Zero;
+            vector.Y = 3;
+            vector.Z = 17;
+
+            camera.Eye = vector;
+        }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
+            this.ResetarCamera();
+
             Console.WriteLine(" --- Ajuda / Teclas: ");
             Console.WriteLine(" [  H     ] mostra teclas usadas. ");
-
-            // objetoId = Utilitario.charProximo(objetoId);
-            // obj_Cubo = new Cubo(objetoId, null);
-            // objetosLista.Add(obj_Cubo);
-            // objetoSelecionado = obj_Cubo;
 
             this.domino.CriarPecas(objetosLista);
 
             objetoSelecionado = this.domino.PegarPecaAtual();
 
-            objetosLista.Add(new Chao(
-                            new Ponto4D(Utilitario.RetornaMetro(20.0d), -2d),
-                            Utilitario.RetornaMetro(60))
-                        );
-
-#if CG_Privado  //FIXME: arrumar os outros objetos
-      objetoId = Utilitario.charProximo(objetoId);
-      obj_Cilindro = new Cilindro(objetoId, null);
-      obj_Cilindro.ObjetoCor.CorR = 177; obj_Cilindro.ObjetoCor.CorG = 166; obj_Cilindro.ObjetoCor.CorB = 136;
-      objetosLista.Add(obj_Cilindro);
-      obj_Cilindro.Translacao(2, 'x');
-
-      objetoId = Utilitario.charProximo(objetoId);
-      obj_Esfera = new Esfera(objetoId, null);
-      obj_Esfera.ObjetoCor.CorR = 177; obj_Esfera.ObjetoCor.CorG = 166; obj_Esfera.ObjetoCor.CorB = 136;
-      objetosLista.Add(obj_Esfera);
-      obj_Esfera.Translacao(4, 'x');
-
-      objetoId = Utilitario.charProximo(objetoId);
-      obj_Cone = new Cone(objetoId, null);
-      obj_Cone.ObjetoCor.CorR = 177; obj_Cone.ObjetoCor.CorG = 166; obj_Cone.ObjetoCor.CorB = 136;
-      objetosLista.Add(obj_Cone);
-      obj_Cone.Translacao(6, 'x');
-#endif
+            Ponto4D pontoFundo = new Ponto4D(Utilitario.RetornaMetro(20), 0);
+            objetosLista.Add(new Chao(pontoFundo, Utilitario.RetornaMetro(60)));
 
             GL.ClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             GL.Enable(EnableCap.DepthTest);
@@ -112,7 +87,8 @@ namespace gcgcg
 #if CG_Gizmo
             Sru3D();
 #endif
-            if (domino.Pecas.Count == 0) {
+            if (domino.Pecas.Count == 0)
+            {
                 Console.WriteLine("FIM DE JOGO!");
                 Exit();
             }
@@ -186,7 +162,17 @@ namespace gcgcg
             }
 
             // Menu: seleção
-            else if (menuSelecao.Equals("[menu] C: Câmera")) camera.MenuTecla(e.Key, menuEixoSelecao, deslocamento);
+            else if (menuSelecao.Equals("[menu] C: Câmera"))
+            {
+                if (e.Key == Key.R)
+                {
+                    this.ResetarCamera();
+                }
+                else
+                {
+                    camera.MenuTecla(e.Key, menuEixoSelecao, deslocamento);
+                }
+            }
             else if (menuSelecao.Equals("[menu] O: Objeto"))
             {
                 if (objetoSelecionado != null) objetoSelecionado.MenuTecla(e.Key, menuEixoSelecao, deslocamento, bBoxDesenhar);

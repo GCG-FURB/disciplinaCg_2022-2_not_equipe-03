@@ -29,7 +29,7 @@ namespace gcgcg
 
         public void ProximaPrimitiva()
         {
-            if (this.primitiva >= 15)
+            if (this.primitiva >= 14)
             {
                 this.primitiva = 0;
                 base.PrimitivaTipo = 0;

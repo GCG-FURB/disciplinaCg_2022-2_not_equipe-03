@@ -112,54 +112,16 @@ namespace gcgcg
         private void ColocarPecaNoInicio()
         {
             this.pecaAtual.ResetarPeca();
-            this.pecaAtual.Translacao(4, 'z');
-            this.pecaAtual.Rotacao(-90, 'x');
-            this.pecaAtual.Translacao(-2, 'y');
+            this.pecaAtual.Translacao(9, 'z'); // traz peça pra frente
+            this.pecaAtual.Rotacao(-90, 'x'); // deita a peça
         }
 
         private bool CalculaNovaPosicaoPeca(bool inicio, string jogada)
         {
             this.ColocarPecaNoInicio();
 
-            if (this.PecasPosicionadas.Count > 1)
-            {
-                // atualiza valores para proxima jogada
-                if (!this.pecaAtual.is_carroca)
-                {
-                    if (jogada.Equals("cruzado"))
-                    {
-                        this.pecaAtual.Rotacao(90, 'z');
-                    }
-                    else
-                    {
-                        this.pecaAtual.Rotacao(-90, 'z');
-                    }
+            this.CalculaTranslacao(inicio, jogada);
 
-                    if (inicio)
-                    {
-                        this.TransalacaoParaDireita += 2.25;
-                        this.pecaAtual.Translacao(TransalacaoParaDireita, 'x');
-                    }
-                    else
-                    {
-                        this.TransalacaoParaEsquerda -= 2.25;
-                        this.pecaAtual.Translacao(TransalacaoParaEsquerda, 'x');
-                    }
-                }
-                else
-                {
-                    if (inicio)
-                    {
-                        this.TransalacaoParaDireita += 2.25;
-                        this.pecaAtual.Translacao(TransalacaoParaDireita, 'x');
-                    }
-                    else
-                    {
-                        this.TransalacaoParaEsquerda -= 2.25;
-                        this.pecaAtual.Translacao(TransalacaoParaEsquerda, 'x');
-                    }
-                }
-            }
             this.AtualizarPecaAtual();
             if (this.Pecas.Count == 0)
             {
@@ -167,7 +129,56 @@ namespace gcgcg
             }
             return false;
         }
-        public void AtualizarPrimitivaDivisoria() {
+
+        private void CalculaTranslacao(bool inicio, string jogada)
+        {
+            if (!this.pecaAtual.is_carroca)
+            {
+                this.GirarPeca(jogada);
+            }
+            if (this.PecasPosicionadas.Count == 1)
+            {
+                return;
+            }
+
+            if (inicio)
+            {
+                if (this.TransalacaoParaDireita == 0) // Translação apenas para a primeira peça
+                {
+                    this.TransalacaoParaDireita += 7;
+                }
+                else if (jogada.Equals("cruzado"))// Outras peças que não são carroça e estão em lados opostos
+                {
+                    this.TransalacaoParaDireita += 4.5;
+                }
+                this.pecaAtual.Translacao(this.TransalacaoParaDireita, 'x'); // Move a peça pra posição certa
+
+                if (jogada.Equals("lado certo"))// Outras peças que não são carroça e estão do mesmo lado
+                {
+                    this.TransalacaoParaDireita += 4.5;
+                }
+            }
+            else
+            {
+
+            }
+        }
+
+        public void GirarPeca(string jogada)
+        {
+            if (!jogada.Equals("cruzado"))
+            {
+                this.pecaAtual.Rotacao(-90, 'z');
+                this.pecaAtual.Translacao(-3.5, 'z');
+            }
+            else
+            {
+                this.pecaAtual.Rotacao(90, 'z');
+                this.pecaAtual.Translacao(-1, 'z');
+            }
+        }
+        public void AtualizarPrimitivaDivisoria()
+        {
             this.pecaAtual.AtualizarPrimitivaDivisoria();
         }
 
@@ -194,18 +205,18 @@ namespace gcgcg
 
             if (inicio)
             {
-                if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_direita)
-                {
-                    pecaParaConectar.is_conectado_direita = true;
-                    this.pecaAtual.is_conectado_direita = true;
-                    return "lado certo";
-                }
-                else if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_esquerda)
+                if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_esquerda)
                 {
                     pecaParaConectar.is_conectado_direita = true;
                     this.pecaAtual.is_conectado_direita = true;
                     this.pecaAtual.GirarPecaLogica();
                     return "cruzado";
+                }
+                else if (pecaParaConectar.bolinhas_esquerda == this.pecaAtual.bolinhas_direita)
+                {
+                    pecaParaConectar.is_conectado_direita = true;
+                    this.pecaAtual.is_conectado_direita = true;
+                    return "lado certo";
                 }
             }
             else
