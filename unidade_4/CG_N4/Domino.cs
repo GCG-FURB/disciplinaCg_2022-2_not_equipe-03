@@ -140,9 +140,16 @@ namespace gcgcg
             {
                 return;
             }
-            if (this.pecaAtual.is_carroca) {
+            if (this.pecaAtual.is_carroca && inicio)
+            {
                 this.pecaAtual.Translacao(this.TransalacaoParaDireita, 'x'); // Move a peça pra posição certa
                 this.TransalacaoParaDireita += 2.5;
+            }
+
+            else if (this.pecaAtual.is_carroca && !inicio)
+            {
+                this.TransalacaoParaEsquerda -= 2.5;
+                this.pecaAtual.Translacao(this.TransalacaoParaEsquerda, 'x'); // Move a peça pra posição certa
             }
 
             else if (inicio)
@@ -162,9 +169,22 @@ namespace gcgcg
                     this.TransalacaoParaDireita += 4.5;
                 }
             }
-            else
+            else if (!inicio)
             {
-
+                if (this.TransalacaoParaEsquerda == 0) // Translação apenas para a primeira peça
+                {
+                    this.TransalacaoParaEsquerda -= 4.5;
+                }
+                else if (jogada.Equals("lado certo"))// Outras peças que não são carroça e estão do mesmo lado
+                {
+                    this.TransalacaoParaEsquerda -= 4.5;
+                }
+                this.pecaAtual.Translacao(this.TransalacaoParaEsquerda, 'x'); // Move a peça pra posição certa
+                Console.WriteLine(this.TransalacaoParaEsquerda);
+                if (jogada.Equals("cruzado"))// Outras peças que não são carroça e estão em lados opostos
+                {
+                    this.TransalacaoParaEsquerda -= 4.5;
+                }
             }
         }
 
