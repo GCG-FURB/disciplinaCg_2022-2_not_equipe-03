@@ -61,6 +61,8 @@ namespace gcgcg
             GL.ClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             GL.Enable(EnableCap.DepthTest);
             GL.Enable(EnableCap.CullFace);
+
+            
         }
         protected override void OnResize(EventArgs e)
         {
